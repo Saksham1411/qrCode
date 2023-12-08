@@ -1,36 +1,35 @@
 const Student = require('../models/student');
+const { StatusCodes } = require('http-status-codes');
 const QRCode = require('qrcode');
 
 const addStudent = async (req, res) => {
-    // const { name, rollNo } = req.body;
-    // console.log(req.body);
     const student = await Student.create({ ...req.body });
-    console.log(student.rollNo);
 
     QRCode.toDataURL(student._id.toString(), function (err, url) {
         let src = url;
-        // console.log(src);
-        res.render("register", { src });
+        res.status(StatusCodes.CREATED).render("register", { src });
         return;
     })
-
     // res.redirect('/register');
 }
 
 const verifyStudent = async (req, res) => {
     const { id } = req.body;
     const student = await Student.findOne({ _id: id });
-    // console.log(student);
+    if (!student) {
+        res.status(StatusCodes.NOT_FOUND).send("Wrong QR Code");
+    }
     if (!student.allowed) {
         await Student.findOneAndUpdate({ _id: id }, { allowed: true });
-        console.log("work1");
-        res.status(200).send({ data: "Allowed" });
-        // res.render("home", { data: "Allowed" });
+        res.status(StatusCodes.OK).send({ data: "Allowed" });
         return;
     }
-    console.log("work1");
-    // res.render("Scanner", { data: "Not Allowed" });
-    res.status(200).send({ data: "Not Allowed" });
+    res.status(StatusCodes.OK).send({ data: "Not Allowed" });
 }
 
-module.exports = { addStudent, verifyStudent };
+const resetAllowed = async (req, res) => {
+    const student = await Student.updateMany({ allowed: true }, { allowed: false } );
+    res.send("works");
+}
+
+module.exports = { addStudent, verifyStudent,resetAllowed };

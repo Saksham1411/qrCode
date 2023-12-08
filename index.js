@@ -16,13 +16,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', staticRoute);
 app.use('/', studentRoute);
 
-app.get('/', (req, res) => {
-    // QRCode.toDataURL('Hello World', function (err, url) {
-    //     let src = url;
-    //     return res.render("home", { src })
-    // })
-    return res.render("home");
-})
+// app.get('/', (req, res) => {
+//     // QRCode.toDataURL('Hello World', function (err, url) {
+//     //     let src = url;
+//     //     return res.render("home", { src })
+//     // })
+//     return res.render("home");
+// })
 
 const start = async () => {
     try {

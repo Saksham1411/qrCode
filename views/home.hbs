@@ -1,13 +1,36 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    hello
-    <p> {{data}} </p>
-    {{!-- <img src="{{src}}"> --}}
-</body>
+  </head>
+  <body>
+    <h1>HomePage</h1>
+    <ul>
+      <li>
+        <a href="/scanner">Scanner</a>
+      </li>
+      <li>
+        <a href="/register">Register</a>
+      </li>
+      <li>
+        <button id="btn">Reset</button>
+      </li>
+    </ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const btn = document.getElementById("btn");
+        btn.addEventListener('click',resetValues);
+        
+        function resetValues(){
+            axios.patch("/reset",{})
+            .then((res)=>{
+                console.log(res);
+            })
+        }
+
+    </script>
+
+  </body>
 </html>

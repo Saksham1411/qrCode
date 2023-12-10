@@ -1,9 +1,8 @@
 const express = require('express');
-const QRCode = require('qrcode');
 const staticRoute = require('./routes/staticRoutes');
 const studentRoute = require('./routes/student');
+const notFound = require('./middleware/not-found');
 const mongoose = require('mongoose');
-
 
 const app = express();
 
@@ -16,13 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', staticRoute);
 app.use('/', studentRoute);
 
-// app.get('/', (req, res) => {
-//     // QRCode.toDataURL('Hello World', function (err, url) {
-//     //     let src = url;
-//     //     return res.render("home", { src })
-//     // })
-//     return res.render("home");
-// })
+app.use(notFound);
 
 const start = async () => {
     try {

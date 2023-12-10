@@ -4,23 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="node_modules/html5-qrcode/html5-qrcode.min.js"></script>
   </head>
-  <body>
+  <body class="bg-gray-700 text-white">
 
     <div id="reader">
 
     </div>
-    <h1 id="result">{{data}}</h1>
+    <div id="result" class="flex justify-center my-8 text-4xl font-bold">
+      <p class="">
+        {{data}}
+      </p>
+    </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       function onScanSuccess(decodedText, decodedResult) {
-        // handle the scanned code as you like, for example:
         const value = decodedText;
         console.log(`Code matched = ${decodedText}`, decodedResult);
         html5QrcodeScanner.clear();
-        {{!-- document.getElementById("result").innerHTML = value; --}}
         sendToServer(value);
       }
 
@@ -32,10 +35,7 @@
           console.log(response.data.data);
           document.getElementById("result").innerHTML += response.data.data;
         });
-
-
       }
-
 
       let config = {
         fps: 10,
@@ -45,8 +45,6 @@
         supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
       
       };
-
-
 
       let html5QrcodeScanner = new Html5QrcodeScanner(
         "reader",

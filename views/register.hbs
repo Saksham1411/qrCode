@@ -10,6 +10,9 @@
 <body class="bg-gray-700 text-white">
     <h1 class="text-3xl font-bold bg-gray-800 p-4 font-serif">Register</h1>
     <div class="my-8 flex flex-col justify-center items-center w-screen gap-4">
+        {{#if msg}}
+            <p class="bg-red-900 font-bold text-md p-3 rounded-lg">{{msg}}</p>
+        {{/if}}
         <form action="/register" method="post" class="flex flex-col gap-2">
 
             <label for="name">Name</label>
@@ -19,6 +22,7 @@
             <button type="submit" class="border border-gray-900 rounded w-1/2 px-2 py-1 bg-gray-900 my-1 hover:bg-gray-800">Register</button>
 
         </form>
+        
         <img src="{{src}}">
     </div>
 </body>

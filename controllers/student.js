@@ -3,10 +3,12 @@ const { StatusCodes } = require('http-status-codes');
 const QRCode = require('qrcode');
 
 const addStudent = async (req, res) => {
-    const { name, password } = req.body;
-    // if(!name || !password){
-    //     res.status(StatusCodes.BAD_REQUEST).render("register")
-    // }
+    const { name, rollNo } = req.body;
+    if(!name || !rollNo){
+        return res.status(StatusCodes.BAD_REQUEST).render("register",{
+            msg:"Enter the Name or RollNo",
+        })
+    }
     const student = await Student.create({ ...req.body });
 
     QRCode.toDataURL(student._id.toString(), function (err, url) {
@@ -14,14 +16,13 @@ const addStudent = async (req, res) => {
         res.status(StatusCodes.CREATED).render("register", { src });
         return;
     })
-    // res.redirect('/register');
 }
 
 const verifyStudent = async (req, res) => {
     const { id } = req.body;
     const student = await Student.findOne({ _id: id });
     if (!student) {
-        res.status(StatusCodes.NOT_FOUND).send("Wrong QR Code");
+        return res.send({data:"Wrong QR Code"});
     }
     if (!student.allowed) {
         await Student.findOneAndUpdate({ _id: id }, { allowed: true });
@@ -32,7 +33,7 @@ const verifyStudent = async (req, res) => {
 }
 
 const resetAllowed = async (req, res) => {
-    const student = await Student.updateMany({ allowed: true }, { allowed: false });
+    await Student.updateMany({ allowed: true }, { allowed: false });
     res.send("works");
 }
 

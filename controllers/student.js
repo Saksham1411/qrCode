@@ -9,13 +9,20 @@ const addStudent = async (req, res) => {
             msg:"Enter the Name or RollNo",
         })
     }
-    const student = await Student.create({ ...req.body });
+    try{
+        const student = await Student.create({ ...req.body });
+        QRCode.toDataURL(student._id.toString(), function (err, url) {
+            let src = url;
+            res.status(StatusCodes.CREATED).render("register", { src });
+            return;
+        })
+    }catch(error){
+        res.render("register",{
+            msg:"RollNo already exist",
+        })
+    }
 
-    QRCode.toDataURL(student._id.toString(), function (err, url) {
-        let src = url;
-        res.status(StatusCodes.CREATED).render("register", { src });
-        return;
-    })
+    
 }
 
 const verifyStudent = async (req, res) => {

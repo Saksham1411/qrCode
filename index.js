@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const staticRoute = require('./routes/staticRoutes');
 const studentRoute = require('./routes/student');
+const userRoute = require('./routes/auth');
 const notFound = require('./middleware/not-found');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', staticRoute);
+app.use('/',userRoute);
+// console.log("hihi");
 app.use('/', studentRoute);
 
 app.use(notFound);

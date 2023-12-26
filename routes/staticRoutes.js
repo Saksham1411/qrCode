@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/',(req,res)=>{
+router.get('/home',(req,res)=>{
     // console.log(req.user);
     res.render("home",{
         user:req.user,
@@ -19,11 +19,11 @@ router.get('/register',(req,res)=>{
 router.get('/signIn',(req,res)=>{
     res.render("signin");
 })
-router.get('/logIn',(req,res)=>{
+router.get('/',(req,res)=>{
     res.render("login");
 })
 router.get('/logOut',(req,res)=>{
-    res.clearCookie('token').redirect('/login');
+    res.clearCookie('token').redirect('/');
 })
 
 

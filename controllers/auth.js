@@ -16,7 +16,7 @@ const logIn = async (req, res) => {
         return res.status(StatusCodes.BAD_REQUEST).send("Password Mismatch");
     }
     const token = user.createJWT();
-    res.status(StatusCodes.OK).cookie('token',token).send({user,token});
+    res.status(StatusCodes.OK).cookie('token',token).redirect('/');
 }
 
 module.exports = { register,logIn };

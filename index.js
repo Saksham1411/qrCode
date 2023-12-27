@@ -12,7 +12,7 @@ const checkAuth = require('./middleware/authentication');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.set("view engine", "hbs");
+app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 app.use(express.json());

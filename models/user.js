@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 6,
+    },
+    role:{
+        type:String,
+        enum:["ADMIN","USER"],
+        default:"USER",
     }
 }, { timestamps: true });
 
@@ -28,7 +33,7 @@ UserSchema.pre('save',async function(next){
 
 UserSchema.methods.createJWT = function () {
     return jwt.sign(
-        { userId: this._id, name: this.fullName,email:this.email },
+        { userId: this._id, name: this.fullName,email:this.email,role:this.role },
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_LIFETIME }
     )

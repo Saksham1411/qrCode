@@ -9,9 +9,9 @@
   <body class="bg-gray-700 text-white">
     <h1 class="text-3xl font-bold bg-gray-800 p-4 font-serif">Log In</h1>
     <div class="my-8 flex flex-col justify-center items-center w-screen gap-4">
-        {{#if msg}}
-            <p class="bg-red-900 font-bold text-md p-3 rounded-lg">{{msg}}</p>
-        {{/if}}
+        <% if (locals.msg) { %>
+          <p class="bg-red-900 font-bold text-md p-3 rounded-lg"><%= msg %></p>
+        <% } %>
       <form action="/logIn" method="post"  class="flex flex-col gap-2">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" class="text-black px-2 rounded"/>
